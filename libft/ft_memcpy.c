@@ -6,13 +6,13 @@
 /*   By: lmaresov <lmaresov@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:54:02 by lmaresov          #+#    #+#             */
-/*   Updated: 2023/09/01 16:05:33 by lmaresov         ###   ########.fr       */
+/*   Updated: 2024/11/09 10:58:58 by lmaresov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
+
 #include <stdio.h>
 #include <string.h>
-*/
+
 #include "libft.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)

@@ -6,7 +6,7 @@
 /*   By: lmaresov <lmaresov@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 09:13:30 by lmaresov          #+#    #+#             */
-/*   Updated: 2024/11/03 13:26:47 by lmaresov         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:06:17 by lmaresov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ int	check_map_file_helper(int fd, char *line, t_game *game)
 	map_width(line, game);
 	if (mapinfo_checker(line, game))
 		return (1);
+	// write (1, line, ft_strlen(line));
 	free(line);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		// write (1, line, ft_strlen(line));
+		if (is_empty_line(line))
+			return (1);
 		map_width(line, game);
 		if (mapinfo_checker(line, game))
 			return (1);
@@ -62,7 +66,10 @@ int	check_map_file(int fd, t_game *game)
 		while (line[i] && line[i] == ' ')
 			i++;
 		if (line[i] && line[i] == '\n')
+		{	
+			free(line);
 			continue ;
+		}
 		if (check_stats(&line[i], game))
 		{
 			if (check_map_char(&line[i], game))
@@ -79,7 +86,7 @@ int	check_map_file(int fd, t_game *game)
 int	check_arg(char *argv, t_game *game)
 {
 	int	fd;
-
+	
 	if (check_extension(argv))
 	{
 		printf("Error\nWrong extension\n");
@@ -97,5 +104,6 @@ int	check_arg(char *argv, t_game *game)
 		return (1);
 	}
 	close(fd);
+	game->mapinfo.map_started = 0;
 	return (0);
 }

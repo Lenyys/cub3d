@@ -6,11 +6,28 @@
 /*   By: lmaresov <lmaresov@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:15:35 by lmaresov          #+#    #+#             */
-/*   Updated: 2024/11/03 13:30:53 by lmaresov         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:37:45 by lmaresov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_map_char(char *line, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	// if (line[i] && ft_strchr("01NSEW", line[i]))
+	if (line[i] && ft_strchr("10", line[i]))
+	{
+		game->mapinfo.map_started = 1;
+		game->mapinfo.height++;
+		return (1);
+	}
+	return (0);
+}
 
 int	check_stats(char *line, t_game *game)
 {

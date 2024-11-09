@@ -6,26 +6,11 @@
 /*   By: lmaresov <lmaresov@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:11:36 by lmaresov          #+#    #+#             */
-/*   Updated: 2024/11/03 13:30:03 by lmaresov         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:41:03 by lmaresov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	check_map_char(char *line, t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (line[i] && ft_strchr("01NSEW", line[i]))
-	{
-		game->mapinfo.map_started = 1;
-		return (1);
-	}
-	return (0);
-}
 
 void	count_map_char(t_game *game, char letter)
 {
@@ -39,6 +24,39 @@ void	count_map_char(t_game *game, char letter)
 		game->check.w++;
 }
 
+int empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '\n' && line[i] == ' ')
+		i++;
+	if (line[i] == '\n')
+	{
+		if (line)
+			free(line);
+		return (1);
+	}
+	return (0);
+}
+
+int is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '\n' && line[i] == ' ')
+		i++;
+	if (line[i] == '\n')
+	{
+		write(2, "empty line in map\n", 18);
+		if (line)
+			free(line);
+		return (1);
+	}
+	return (0);
+}
+
 int	mapinfo_checker(char *line, t_game *game)
 {
 	int	i;
@@ -49,6 +67,7 @@ int	mapinfo_checker(char *line, t_game *game)
 		if (!ft_strchr("01NSEW ", line[i]))
 		{
 			write(2, "invalid character in map\n", 25);
+			free(line);
 			return (1);
 		}
 		if (ft_strchr("NSEW", line[i]))
